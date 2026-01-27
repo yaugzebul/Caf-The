@@ -13,13 +13,13 @@ const db = mysql.createPool( {
 host:process.env.DB_HOST,
     user:process.env.DB_USER,
     password:process.env.DB_PASSWORD,
-    database:process.env.DB_NAME
+    database:process.env.DB_NAME,
 
     // PARAMETRES DU POOL
     // Si plus de connexion dispo, alors elles attendent
     waitForConnections:true,
     // Limiter le nb max de connexion
-    connectionLimit:10
+    connectionLimit:10,
 
     // PARAMETRES OPTIONNELS mais recommandés
     // En cas d'échec de connexion, réessayer
@@ -29,5 +29,18 @@ host:process.env.DB_HOST,
     connectTimeout:10000, // 10 secondes
 });
 
+
+(async ()  => {
+    try {
+        const connection = await db.getConnection();
+        console.log("Connecté à la base de données MySQL");
+        // On se déconnecte
+        connection.release();
+    } catch (err){
+        console.error("Erreur de connexion à mySQL : ", err.message)
+        // Arrete l'appli avec code erreur 1
+        process.exit(1);
+    }
+})()
 
 module.exports = db;
