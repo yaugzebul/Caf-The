@@ -77,7 +77,7 @@ const login = async (req, res) => {
                 email: client.email_client,
             },
             process.env.JWT_SECRET,
-            {expiresIn: process.env.EXPIRES_IN || "1h"},
+           //  {expiresIn: process.env.EXPIRES_IN || "1h"},
         )
         res.json({
             message: "Connexion réussie",

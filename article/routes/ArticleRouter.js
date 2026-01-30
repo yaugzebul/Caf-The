@@ -3,10 +3,11 @@
 const express = require('express');
 
 const {getAll, getById, getByCategory} = require("../controllers/ArticleController");
+const {verifyToken} = require("../../mddleware/authMiddleware");
 const router = express.Router();
 
 // GET /api/articles - Récupérer tous les articles
-router.get("/", getAll);
+router.get("/",verifyToken, getAll);
 
 // GET /api/articles/:id || Récupérer un article par son ID
 router.get("/:id", getById);
